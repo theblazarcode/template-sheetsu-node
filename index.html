@@ -4,8 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Template Sheetsu node</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-  <div>Hello</div>
+  <div id="app">
+    <button @click="testFn">Test</button>
+    {{message}}
+  </div>
 </body>
+<script>
+
+  const api = axios.create({
+    baseURL: "/.netlify/functions/api/",
+    headers:{},
+    responseType:'',
+    transformRequest:[(data, headers)=>{
+      return data
+    }],
+    transformResponse:[(data)=>{
+      return data
+    }]
+  })
+
+  const { createApp } = Vue
+  createApp({
+    data() {
+      return {
+        message: `<template></template>`
+      }
+    },
+    methods:{
+      testFn(){
+        console.log('test')
+        api.get('/sheet/profile')
+      }
+    }
+  }).mount('#app')
+</script>
 </html>
